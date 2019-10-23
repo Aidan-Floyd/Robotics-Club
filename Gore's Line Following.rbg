@@ -1,0 +1,276 @@
+<Version>1.0.1</Version>
+
+<VariableList>
+    <Variable>shutoff</Variable>
+</VariableList>
+
+<ProgrammingBlock type="loop" loopType="RepeatForever"/>
+
+<ProgrammingBlock type="comment" commented="1">Set #shutoff to 0.  Wait until button is pressed and released.</ProgrammingBlock>
+
+<ProgrammingBlock type="setValue_Text">
+    <Parameters>
+        <Parameter name="Variable" type="variable">shutoff</Parameter>
+        <Parameter name="RHS" type="float">0</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="OneLineLoop" loopType="WaitUntil">
+    <Parameters>
+        <Parameter name="LHS" type="typedef">SensorValue[touchSensor]</Parameter>
+        <Parameter name="operator" type="typedef">==</Parameter>
+        <Parameter name="RHS" type="float">1</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="OneLineLoop" loopType="WaitUntil">
+    <Parameters>
+        <Parameter name="LHS" type="typedef">SensorValue[touchSensor]</Parameter>
+        <Parameter name="operator" type="typedef">==</Parameter>
+        <Parameter name="RHS" type="float">0</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="comment">Repeat cycle below until #shutoff = 1</ProgrammingBlock>
+
+<ProgrammingBlock type="loop" loopType="RepeatUntil">
+    <Parameters>
+        <Parameter name="LHS" type="typedef">shutoff</Parameter>
+        <Parameter name="operator" type="typedef">==</Parameter>
+        <Parameter name="RHS" type="float">1</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="comment">Check if C sensor sees line.  If so, move forward.  If not, carry on.</ProgrammingBlock>
+
+<ProgrammingBlock type="loop" loopType="RepeatUntil">
+    <Parameters>
+        <Parameter name="LHS" type="typedef">SensorValue[centerLineFollower]</Parameter>
+        <Parameter name="operator" type="typedef">&lt;</Parameter>
+        <Parameter name="RHS" type="float">2000</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="loop" loopType="IfThen">
+    <Parameters>
+        <Parameter name="LHS" type="typedef">SensorValue[centerLineFollower]</Parameter>
+        <Parameter name="operator" type="typedef">&gt;</Parameter>
+        <Parameter name="RHS" type="float">2000</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="functionCall" function="forward">
+    <Parameters>
+        <Parameter name="quantity" type="float" default="1">30</Parameter>
+        <Parameter name="unitType" type="base typedef" default="rotations" typeDef="tMovementUnits">milliseconds</Parameter>
+        <Parameter name="speed" type="short" default="50">50</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="else"/>
+
+<ProgrammingBlock type="end"/>
+
+<ProgrammingBlock type="end"/>
+
+<ProgrammingBlock type="comment">Check if L sensor sees line.  If so, turn right.  If not, carry on.</ProgrammingBlock>
+
+<ProgrammingBlock type="loop" loopType="RepeatUntil">
+    <Parameters>
+        <Parameter name="LHS" type="typedef">SensorValue[leftLineFollower]</Parameter>
+        <Parameter name="operator" type="typedef">&lt;</Parameter>
+        <Parameter name="RHS" type="float">2000</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="loop" loopType="IfThen">
+    <Parameters>
+        <Parameter name="LHS" type="typedef">SensorValue[leftLineFollower]</Parameter>
+        <Parameter name="operator" type="typedef">&gt;</Parameter>
+        <Parameter name="RHS" type="float">2000</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="functionCall" function="turnLeft">
+    <Parameters>
+        <Parameter name="quantity" type="float" default="1">30</Parameter>
+        <Parameter name="unitType" type="base typedef" default="rotations" typeDef="tMovementUnits">milliseconds</Parameter>
+        <Parameter name="speed" type="short" default="50">40</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="else"/>
+
+<ProgrammingBlock type="end"/>
+
+<ProgrammingBlock type="end"/>
+
+<ProgrammingBlock type="comment">Check if R sensor sees line. If so, turn left.  If not, carry on.</ProgrammingBlock>
+
+<ProgrammingBlock type="loop" loopType="RepeatUntil">
+    <Parameters>
+        <Parameter name="LHS" type="typedef">SensorValue[rightLineFollower]</Parameter>
+        <Parameter name="operator" type="typedef">&lt;</Parameter>
+        <Parameter name="RHS" type="float">2000</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="loop" loopType="IfThen">
+    <Parameters>
+        <Parameter name="LHS" type="typedef">SensorValue[rightLineFollower]</Parameter>
+        <Parameter name="operator" type="typedef">&gt;</Parameter>
+        <Parameter name="RHS" type="float">2000</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="functionCall" function="turnRight">
+    <Parameters>
+        <Parameter name="quantity" type="float" default="1">30</Parameter>
+        <Parameter name="unitType" type="base typedef" default="rotations" typeDef="tMovementUnits">milliseconds</Parameter>
+        <Parameter name="speed" type="short" default="50">40</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="else"/>
+
+<ProgrammingBlock type="end"/>
+
+<ProgrammingBlock type="end"/>
+
+<ProgrammingBlock type="comment">Check and see if all sensors don't see line.  If so, #shutoff = 1.  If not, carry on.</ProgrammingBlock>
+
+<ProgrammingBlock type="loop" loopType="IfThen">
+    <Parameters>
+        <Parameter name="LHS" type="typedef">SensorValue[leftLineFollower]</Parameter>
+        <Parameter name="operator" type="typedef">&lt;</Parameter>
+        <Parameter name="RHS" type="float">2000</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="loop" loopType="IfThen">
+    <Parameters>
+        <Parameter name="LHS" type="typedef">SensorValue[centerLineFollower]</Parameter>
+        <Parameter name="operator" type="typedef">&lt;</Parameter>
+        <Parameter name="RHS" type="float">2000</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="loop" loopType="IfThen">
+    <Parameters>
+        <Parameter name="LHS" type="typedef">SensorValue[rightLineFollower]</Parameter>
+        <Parameter name="operator" type="typedef">&lt;</Parameter>
+        <Parameter name="RHS" type="float">2000</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="setValue_Text">
+    <Parameters>
+        <Parameter name="Variable" type="variable">shutoff</Parameter>
+        <Parameter name="RHS" type="float">1</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="else"/>
+
+<ProgrammingBlock type="end"/>
+
+<ProgrammingBlock type="else"/>
+
+<ProgrammingBlock type="end"/>
+
+<ProgrammingBlock type="else"/>
+
+<ProgrammingBlock type="end"/>
+
+<ProgrammingBlock type="end"/>
+
+<ProgrammingBlock type="end"/>
+
+<RobotConfiguration>#pragma config(I2C_Usage, I2C1, i2cSensors)
+#pragma config(Sensor, in1,    leftLineFollower, sensorLineFollower)
+#pragma config(Sensor, in2,    centerLineFollower, sensorLineFollower)
+#pragma config(Sensor, in3,    rightLineFollower, sensorLineFollower)
+#pragma config(Sensor, in6,    gyro,           sensorGyro)
+#pragma config(Sensor, dgtl1,  rightEncoder,   sensorQuadEncoder)
+#pragma config(Sensor, dgtl3,  leftEncoder,    sensorQuadEncoder)
+#pragma config(Sensor, dgtl6,  touchSensor,    sensorTouch)
+#pragma config(Sensor, dgtl8,  sonarSensor,    sensorSONAR_cm)
+#pragma config(Sensor, dgtl11, armEncoder,     sensorQuadEncoder)
+#pragma config(Sensor, I2C_1,  rightIME,       sensorQuadEncoderOnI2CPort,    , AutoAssign )
+#pragma config(Sensor, I2C_2,  leftIME,        sensorQuadEncoderOnI2CPort,    , AutoAssign )
+#pragma config(Sensor, I2C_3,  armIME,         sensorQuadEncoderOnI2CPort,    , AutoAssign )
+#pragma config(Motor,  port1,           leftMotor,     tmotorVex393_HBridge, openLoop, reversed, driveLeft, encoderPort, I2C_2)
+#pragma config(Motor,  port6,           clawMotor,     tmotorVex393_MC29, openLoop)
+#pragma config(Motor,  port7,           armMotor,      tmotorVex393_MC29, openLoop, reversed, encoderPort, I2C_3)
+#pragma config(Motor,  port10,          rightMotor,    tmotorVex393_HBridge, openLoop, driveRight, encoderPort, I2C_1)
+//*!!Code automatically generated by 'ROBOTC' configuration wizard               !!*//
+</RobotConfiguration>
+
+<CSource>#pragma config(I2C_Usage, I2C1, i2cSensors)
+#pragma config(Sensor, in1,    leftLineFollower, sensorLineFollower)
+#pragma config(Sensor, in2,    centerLineFollower, sensorLineFollower)
+#pragma config(Sensor, in3,    rightLineFollower, sensorLineFollower)
+#pragma config(Sensor, in6,    gyro,           sensorGyro)
+#pragma config(Sensor, dgtl1,  rightEncoder,   sensorQuadEncoder)
+#pragma config(Sensor, dgtl3,  leftEncoder,    sensorQuadEncoder)
+#pragma config(Sensor, dgtl6,  touchSensor,    sensorTouch)
+#pragma config(Sensor, dgtl8,  sonarSensor,    sensorSONAR_cm)
+#pragma config(Sensor, dgtl11, armEncoder,     sensorQuadEncoder)
+#pragma config(Sensor, I2C_1,  rightIME,       sensorQuadEncoderOnI2CPort,    , AutoAssign )
+#pragma config(Sensor, I2C_2,  leftIME,        sensorQuadEncoderOnI2CPort,    , AutoAssign )
+#pragma config(Sensor, I2C_3,  armIME,         sensorQuadEncoderOnI2CPort,    , AutoAssign )
+#pragma config(Motor,  port1,           leftMotor,     tmotorVex393_HBridge, openLoop, reversed, driveLeft, encoderPort, I2C_2)
+#pragma config(Motor,  port6,           clawMotor,     tmotorVex393_MC29, openLoop)
+#pragma config(Motor,  port7,           armMotor,      tmotorVex393_MC29, openLoop, reversed, encoderPort, I2C_3)
+#pragma config(Motor,  port10,          rightMotor,    tmotorVex393_HBridge, openLoop, driveRight, encoderPort, I2C_1)
+//*!!Code automatically generated by 'ROBOTC' configuration wizard               !!*//
+
+
+float shutoff;
+
+
+task main()
+{
+	repeat (forever) {
+		//// Set #shutoff to 0.  Wait until button is pressed and released.
+		shutoff = 0;
+		waitUntil (SensorValue[touchSensor] == 1);
+		waitUntil (SensorValue[touchSensor] == 0);
+		// Repeat cycle below until #shutoff = 1
+		repeatUntil (shutoff == 1) {
+			// Check if C sensor sees line.  If so, move forward.  If not, carry on.
+			repeatUntil (SensorValue[centerLineFollower] &lt; 2000) {
+				if (SensorValue[centerLineFollower] &gt; 2000) {
+					forward(30, milliseconds, 50);
+				} else {
+				}
+			}
+			// Check if L sensor sees line.  If so, turn right.  If not, carry on.
+			repeatUntil (SensorValue[leftLineFollower] &lt; 2000) {
+				if (SensorValue[leftLineFollower] &gt; 2000) {
+					turnLeft(30, milliseconds, 40);
+				} else {
+				}
+			}
+			// Check if R sensor sees line. If so, turn left.  If not, carry on.
+			repeatUntil (SensorValue[rightLineFollower] &lt; 2000) {
+				if (SensorValue[rightLineFollower] &gt; 2000) {
+					turnRight(30, milliseconds, 40);
+				} else {
+				}
+			}
+			// Check and see if all sensors don't see line.  If so, #shutoff = 1.  If not, carry on.
+			if (SensorValue[leftLineFollower] &lt; 2000) {
+				if (SensorValue[centerLineFollower] &lt; 2000) {
+					if (SensorValue[rightLineFollower] &lt; 2000) {
+						shutoff = 1;
+					} else {
+					}
+				} else {
+				}
+			} else {
+			}
+		}
+	}
+}
+</CSource>

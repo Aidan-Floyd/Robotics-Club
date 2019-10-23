@@ -1,0 +1,236 @@
+<Version>1.0.1</Version>
+
+<VariableList>
+    <Variable>shutoff</Variable>
+</VariableList>
+
+<ProgrammingBlock type="loop" loopType="RepeatForever"/>
+
+<ProgrammingBlock type="OneLineLoop" loopType="WaitUntil">
+    <Parameters>
+        <Parameter name="LHS" type="typedef">SensorValue[touchSensor]</Parameter>
+        <Parameter name="operator" type="typedef">==</Parameter>
+        <Parameter name="RHS" type="float">1</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="OneLineLoop" loopType="WaitUntil">
+    <Parameters>
+        <Parameter name="LHS" type="typedef">SensorValue[touchSensor]</Parameter>
+        <Parameter name="operator" type="typedef">==</Parameter>
+        <Parameter name="RHS" type="float">0</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="loop" loopType="RepeatUntil">
+    <Parameters>
+        <Parameter name="LHS" type="typedef">shutoff</Parameter>
+        <Parameter name="operator" type="typedef">==</Parameter>
+        <Parameter name="RHS" type="float">1</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="loop" loopType="IfThen">
+    <Parameters>
+        <Parameter name="LHS" type="typedef">SensorValue[touchSensor]</Parameter>
+        <Parameter name="operator" type="typedef">!=</Parameter>
+        <Parameter name="RHS" type="float">1</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="loop" loopType="IfThen">
+    <Parameters>
+        <Parameter name="LHS" type="typedef">SensorValue[leftLineFollower]</Parameter>
+        <Parameter name="operator" type="typedef">&gt;</Parameter>
+        <Parameter name="RHS" type="float">2500</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="functionCall" function="turnRight">
+    <Parameters>
+        <Parameter name="quantity" type="float" default="1">10</Parameter>
+        <Parameter name="unitType" type="base typedef" default="rotations" typeDef="tMovementUnits">milliseconds</Parameter>
+        <Parameter name="speed" type="short" default="50">50</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="functionCall" function="moveMotor">
+    <Parameters>
+        <Parameter name="motorPort" type="base typedef" default="port10" typeDef="tMotor">port10</Parameter>
+        <Parameter name="quantity" type="float" default="1">100</Parameter>
+        <Parameter name="unitType" type="base typedef" default="rotations" typeDef="tMovementUnits">milliseconds</Parameter>
+        <Parameter name="speed" type="short" default="50">50</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="else"/>
+
+<ProgrammingBlock type="loop" commented="1" loopType="IfThen">
+    <Parameters>
+        <Parameter name="LHS" type="typedef">SensorValue[rightLineFollower]</Parameter>
+        <Parameter name="operator" type="typedef">&gt;</Parameter>
+        <Parameter name="RHS" type="float">2500</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="functionCall" commented="1" function="turnLeft">
+    <Parameters>
+        <Parameter name="quantity" type="float" default="1">10</Parameter>
+        <Parameter name="unitType" type="base typedef" default="rotations" typeDef="tMovementUnits">milliseconds</Parameter>
+        <Parameter name="speed" type="short" default="50">50</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="functionCall" commented="1" function="moveMotor">
+    <Parameters>
+        <Parameter name="motorPort" type="base typedef" default="port10" typeDef="tMotor">port1</Parameter>
+        <Parameter name="quantity" type="float" default="1">100</Parameter>
+        <Parameter name="unitType" type="base typedef" default="rotations" typeDef="tMovementUnits">milliseconds</Parameter>
+        <Parameter name="speed" type="short" default="50">50</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="else" commented="1"/>
+
+<ProgrammingBlock type="loop" commented="1" loopType="IfThen">
+    <Parameters>
+        <Parameter name="LHS" type="typedef">SensorValue[centerLineFollower]</Parameter>
+        <Parameter name="operator" type="typedef">&gt;</Parameter>
+        <Parameter name="RHS" type="float">2500</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="functionCall" commented="1" function="forward">
+    <Parameters>
+        <Parameter name="quantity" type="float" default="1">100</Parameter>
+        <Parameter name="unitType" type="base typedef" default="rotations" typeDef="tMovementUnits">milliseconds</Parameter>
+        <Parameter name="speed" type="short" default="50">50</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="else" commented="1"/>
+
+<ProgrammingBlock type="setValue_Text" commented="1">
+    <Parameters>
+        <Parameter name="Variable" type="variable">shutoff</Parameter>
+        <Parameter name="RHS" type="float">1</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="functionCall" commented="1" function="playSound">
+    <Parameters>
+        <Parameter name="sound" type="base typedef" typeDef="TSounds">soundBeepBeep</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="end" commented="1"/>
+
+<ProgrammingBlock type="end" commented="1"/>
+
+<ProgrammingBlock type="end"/>
+
+<ProgrammingBlock type="else"/>
+
+<ProgrammingBlock type="setValue_Text">
+    <Parameters>
+        <Parameter name="Variable" type="variable">shutoff</Parameter>
+        <Parameter name="RHS" type="float">1</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="end"/>
+
+<ProgrammingBlock type="end"/>
+
+<ProgrammingBlock type="setValue_Text">
+    <Parameters>
+        <Parameter name="Variable" type="variable">shutoff</Parameter>
+        <Parameter name="RHS" type="float">0</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="OneLineLoop" loopType="WaitUntil">
+    <Parameters>
+        <Parameter name="LHS" type="typedef">SensorValue[touchSensor]</Parameter>
+        <Parameter name="operator" type="typedef">==</Parameter>
+        <Parameter name="RHS" type="float">0</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="end"/>
+
+<RobotConfiguration>#pragma config(I2C_Usage, I2C1, i2cSensors)
+#pragma config(Sensor, in1,    leftLineFollower, sensorLineFollower)
+#pragma config(Sensor, in2,    centerLineFollower, sensorLineFollower)
+#pragma config(Sensor, in3,    rightLineFollower, sensorLineFollower)
+#pragma config(Sensor, in6,    gyro,           sensorGyro)
+#pragma config(Sensor, dgtl1,  rightEncoder,   sensorQuadEncoder)
+#pragma config(Sensor, dgtl3,  leftEncoder,    sensorQuadEncoder)
+#pragma config(Sensor, dgtl6,  touchSensor,    sensorTouch)
+#pragma config(Sensor, dgtl8,  sonarSensor,    sensorSONAR_cm)
+#pragma config(Sensor, dgtl11, armEncoder,     sensorQuadEncoder)
+#pragma config(Sensor, I2C_1,  rightIME,       sensorQuadEncoderOnI2CPort,    , AutoAssign )
+#pragma config(Sensor, I2C_2,  leftIME,        sensorQuadEncoderOnI2CPort,    , AutoAssign )
+#pragma config(Sensor, I2C_3,  armIME,         sensorQuadEncoderOnI2CPort,    , AutoAssign )
+#pragma config(Motor,  port1,           leftMotor,     tmotorVex393_HBridge, openLoop, reversed, driveLeft, encoderPort, I2C_2)
+#pragma config(Motor,  port6,           clawMotor,     tmotorVex393_MC29, openLoop)
+#pragma config(Motor,  port7,           armMotor,      tmotorVex393_MC29, openLoop, reversed, encoderPort, I2C_3)
+#pragma config(Motor,  port10,          rightMotor,    tmotorVex393_HBridge, openLoop, driveRight, encoderPort, I2C_1)
+//*!!Code automatically generated by 'ROBOTC' configuration wizard               !!*//
+</RobotConfiguration>
+
+<CSource>#pragma config(I2C_Usage, I2C1, i2cSensors)
+#pragma config(Sensor, in1,    leftLineFollower, sensorLineFollower)
+#pragma config(Sensor, in2,    centerLineFollower, sensorLineFollower)
+#pragma config(Sensor, in3,    rightLineFollower, sensorLineFollower)
+#pragma config(Sensor, in6,    gyro,           sensorGyro)
+#pragma config(Sensor, dgtl1,  rightEncoder,   sensorQuadEncoder)
+#pragma config(Sensor, dgtl3,  leftEncoder,    sensorQuadEncoder)
+#pragma config(Sensor, dgtl6,  touchSensor,    sensorTouch)
+#pragma config(Sensor, dgtl8,  sonarSensor,    sensorSONAR_cm)
+#pragma config(Sensor, dgtl11, armEncoder,     sensorQuadEncoder)
+#pragma config(Sensor, I2C_1,  rightIME,       sensorQuadEncoderOnI2CPort,    , AutoAssign )
+#pragma config(Sensor, I2C_2,  leftIME,        sensorQuadEncoderOnI2CPort,    , AutoAssign )
+#pragma config(Sensor, I2C_3,  armIME,         sensorQuadEncoderOnI2CPort,    , AutoAssign )
+#pragma config(Motor,  port1,           leftMotor,     tmotorVex393_HBridge, openLoop, reversed, driveLeft, encoderPort, I2C_2)
+#pragma config(Motor,  port6,           clawMotor,     tmotorVex393_MC29, openLoop)
+#pragma config(Motor,  port7,           armMotor,      tmotorVex393_MC29, openLoop, reversed, encoderPort, I2C_3)
+#pragma config(Motor,  port10,          rightMotor,    tmotorVex393_HBridge, openLoop, driveRight, encoderPort, I2C_1)
+//*!!Code automatically generated by 'ROBOTC' configuration wizard               !!*//
+
+
+float shutoff;
+
+
+task main()
+{
+	repeat (forever) {
+		waitUntil (SensorValue[touchSensor] == 1);
+		waitUntil (SensorValue[touchSensor] == 0);
+		repeatUntil (shutoff == 1) {
+			if (SensorValue[touchSensor] != 1) {
+				if (SensorValue[leftLineFollower] &gt; 2500) {
+					turnRight(10, milliseconds, 50);
+					moveMotor(port10, 100, milliseconds, 50);
+				} else {
+					//if (SensorValue[rightLineFollower] &gt; 2500) {
+						//turnLeft(10, milliseconds, 50);
+						//moveMotor(port1, 100, milliseconds, 50);
+					//} else {
+						//if (SensorValue[centerLineFollower] &gt; 2500) {
+							//forward(100, milliseconds, 50);
+						//} else {
+							//shutoff = 1;
+							//playSound(soundBeepBeep);
+						//}
+					//}
+				}
+			} else {
+				shutoff = 1;
+			}
+		}
+		shutoff = 0;
+		waitUntil (SensorValue[touchSensor] == 0);
+	}
+}
+</CSource>

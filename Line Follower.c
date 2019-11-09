@@ -23,6 +23,35 @@ task main()
 				/* Checks whether the surface under the line follower is black and whether the variable "shutoff" is
 				activated. if it is then it will loop the code underneath until one of the two conditions stops being
 				true */
+				if(SensorValue[centerLineFollower] > 2000 && SensorValue[leftLineFollower] > 2000 && SensorValue[rightLineFollower] > 2000)
+				{
+					if(SensorValue[frontTouch] == 1)
+					{
+						/* Step 6 */
+						/* Changes the variable "shutoff" to one. Since this is a requirement of the loop the loop stops */
+						shutoff = 1;
+					}
+					/* Jolt right, then continuously turn right until centerLineFollower > 2000 */
+					turnRight(2000, milliseconds, 50);
+					while(SensorValue[centerLineFollower] < 2000)
+					{
+						if(SensorValue[frontTouch] == 1)
+						{
+							shutoff = 1;
+						}
+						turnRight(20, milliseconds, 50);
+					}
+
+
+					{
+						/* Step 6 */
+						/* Changes the variable "shutoff" to one. Since this is a requirement of the loop the loop stops */
+						shutoff = 1;
+					}
+					{
+						turnRight(30, milliseconds, 50);
+					}
+				}
 				while(SensorValue[centerLineFollower] > 2000 && shutoff == 0)
 				{
 					/* Step 5 */
@@ -32,44 +61,45 @@ task main()
 						/* Step 6 */
 						/* Changes the variable "shutoff" to one. Since this is a requirement of the loop the loop stops */
 						shutoff = 1;
+					}
+					/* Step 7 */
+					/* Moves the robot forward for 100 milliseconds at half power */
+					forward(30, milliseconds, 50);
+
+					/* Step 4 */
+					while(SensorValue[leftLineFollower] > 2000 && shutoff == 0)
+					{
+						/* Step 5 */
+						if(SensorValue[frontTouch] == 1)
+						{
+							/* Step 6 */
+							shutoff = 1;
 						}
 						/* Step 7 */
-						/* Moves the robot forward for 100 milliseconds at half power */
-						forward(30, milliseconds, 50);
+						turnLeft(10, milliseconds, 50);
+					}
+					/* Step 4 */
+					while(SensorValue[rightLineFollower] > 2000 && shutoff == 0)
+					{
+						/* Step 5 */
+						if(SensorValue[frontTouch] == 1)
+						{
+							/* Step 6 */
+							shutoff = 1;
 						}
-				/* Step 4 */
-				while(SensorValue[leftLineFollower] > 2000 && shutoff == 0)
-				{
-					/* Step 5 */
-					if(SensorValue[frontTouch] == 1)
-					{
-						/* Step 6 */
-						shutoff = 1;
+						/* Step 7 */
+						turnRight(10, milliseconds, 50);
 					}
-					/* Step 7 */
-					turnLeft(10, milliseconds, 50);
 				}
-				/* Step 4 */
-				while(SensorValue[rightLineFollower] > 2000 && shutoff == 0)
-				{
-					/* Step 5 */
-					if(SensorValue[frontTouch] == 1)
-					{
-						/* Step 6 */
-						shutoff = 1;
-					}
-					/* Step 7 */
-					turnRight(10, milliseconds, 50);
-				}
+				/* Step 8 */
+				/* Waits until the button stops being pressed */
+				waitUntil(SensorValue[frontTouch] == 0);
+				/* Step 9 */
+				/* Resets the "shutoff" variable */
+				shutoff = 0;
+
+
 			}
-			/* Step 8 */
-			/* Waits until the button stops being pressed */
-			waitUntil(SensorValue[frontTouch] == 0);
-			/* Step 9 */
-			/* Resets the "shutoff" variable */
-			shutoff = 0;
-
-
 		}
 	}
 }
